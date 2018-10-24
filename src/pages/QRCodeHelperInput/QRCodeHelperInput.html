@@ -5,13 +5,33 @@
 </ion-header>
 
 <ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+  <h2>QR Verknüpfung erstellen</h2>
+
+  <div text-center="">
+    <p><ion-img width="150" height="150" src="../assets/imgs/qr.png"></ion-img></p>
+    <button ion-button>Scan</button>
+  </div>
+
+  <ion-item>
+    <ion-label color="primary" stacked>Titel</ion-label>
+    <ion-input type="test" placeholder="Titel"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label color="primary" stacked>Ort</ion-label>
+    <ion-input type="text" placeholder="Ort"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label color="primary" stacked>Link</ion-label>
+    <ion-input type="text" placeholder="www.moodle.de/....."></ion-input>
+  </ion-item>
+
+  <ion-buttons end margin-top="70px">
+    <button ion-button text-end>Eintragen</button>
+  </ion-buttons>
+
+
+
+
 </ion-content>

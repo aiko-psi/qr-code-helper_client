@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
 @Component({
-  selector: 'page-input',
-  templateUrl: 'QRCodeHelperInput.html'
+  selector: 'page-list',
+  templateUrl: 'QRCodeHelperList.html'
 })
-export class QRCodeHelperInput {
+export class QRCodeHelperList {
 
   constructor(public navCtrl: NavController) {
 
