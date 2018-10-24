@@ -1,0 +1,7 @@
+{
+  "name": "QRMockup",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}
