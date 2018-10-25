@@ -13,6 +13,8 @@ import {QRCodeHelperInput} from "../pages/QRCodeHelperInput/QRCodeHelperInput";
 import {QRCodeHelperList} from "../pages/QRCodeHelperList/QRCodeHelperList";
 import {QRCodeHelperPrint} from "../pages/QRCodeHelperPrint/QRCodeHelperPrint";
 
+import { IonicStorageModule } from '@ionic/storage';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -25,7 +27,8 @@ import {QRCodeHelperPrint} from "../pages/QRCodeHelperPrint/QRCodeHelperPrint";
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [

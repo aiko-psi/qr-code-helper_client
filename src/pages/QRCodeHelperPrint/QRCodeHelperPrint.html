@@ -27,7 +27,7 @@
   </ion-item>
 
   <ion-buttons end margin-top="70px">
-    <button ion-button text-end>{{this.mailing ? "Senden" : "Speichern"}}</button>
+    <button ion-button text-end (click)="this.presentToast()">{{this.mailing ? "Senden" : "Speichern"}}</button>
   </ion-buttons>
 
 
