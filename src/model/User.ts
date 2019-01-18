@@ -1,26 +1,31 @@
 import {Injectable} from "@angular/core";
-import {Connection} from "./connection";
 
 @Injectable()
 export class User{
+  private _id: number;
   private _name: string;
-  private _connections: Array<Connection>;
-  private _nextId: number;
+  private _username: string;
+  private _email: string;
 
-  constructor(name:string){
-    this.name = name;
-    this.nextId = 1;
+
+  constructor(name:string, username:string, email:string){
+    this._name = name;
+    this._username = username;
+    this._email = email;
   }
 
   static fromJSON(data:any): User{
-    let newUser = new User(data.name);
-    newUser.nextId = data.nextId;
-    if(data.connections){
-      data.connections.forEach((con: any) => {
-        newUser.connections.push(Connection.fromJSON(con));
-      })
-    }
+    let newUser = new User(data.name, data.username, data.email);
+    newUser.id = data.id;
     return newUser;
+  }
+
+  get id(): number {
+    return this._id;
+  }
+
+  set id(value: number) {
+    this._id = value;
   }
 
   get name(): string {
@@ -31,41 +36,19 @@ export class User{
     this._name = value;
   }
 
-  get connections(): Array<Connection> {
-    return this._connections;
+  get username(): string {
+    return this._username;
   }
 
-  set connections(value: Array<Connection>) {
-    this._connections = value;
+  set username(value: string) {
+    this._username = value;
   }
 
-  addConnection(homepage: string){
-    let newCon = new Connection(this.nextId, homepage);
-    this.nextId = this.nextId+1;
-    this._connections.push(newCon);
+  get email(): string {
+    return this._email;
   }
 
-  getConnection(id: number): Connection{
-    this.connections.forEach((connection) => {
-      if(connection.id == id) return connection;
-    });
-    throw new Error("Connection does not exist");
+  set email(value: string) {
+    this._email = value;
   }
-
-  deleteConnection(con: Connection){
-    let i = this.connections.indexOf(con);
-    if (i == -1) throw new Error("Connection not found");
-    else {
-      this.connections.splice(i, 1);
-    }
-  }
-
-  get nextId(): number {
-    return this._nextId;
-  }
-
-  set nextId(value: number) {
-    this._nextId = value;
-  }
-
 }
