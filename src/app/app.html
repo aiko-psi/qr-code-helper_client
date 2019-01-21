@@ -1,1 +1,24 @@
-<ion-nav [root]="rootPage"></ion-nav>
+<ion-menu [content]="content" id="menu" persistent="true">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Menü</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <button ion-item (click)="showInfo()" menuClose>
+        <ion-icon name="help"></ion-icon> Hilfe
+      </button>
+      <button ion-item (click)="showContact()" menuClose>
+        <ion-icon name="contact"></ion-icon> Kontakt
+      </button>
+      <button ion-item (click)="logout()" menuClose>
+        <ion-icon name="log-out"></ion-icon> Logout
+      </button>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+
+
+<ion-nav #content [root]="rootPage"></ion-nav>

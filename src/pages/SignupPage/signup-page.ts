@@ -40,7 +40,7 @@ export class SignupPage {
     }).then(resp => {
       let user = User.fromJSON(resp);
       this.data.setUser(user);
-      this.navCtrl.setRoot(TabsPage, {user: user});
+      this.navCtrl.setRoot(TabsPage, {user: user, tab: 0});
     }).catch(err => {
       this.loading.dismissAll();
       this.presentToast("Fehlgeschlagen");

@@ -29,6 +29,10 @@ export class Data_provider{
     return this.storage.get("token");
   }
 
+  public clearAll(): Promise<any>{
+    return this.storage.clear();
+  }
+
 
 
 

@@ -12,8 +12,8 @@ import {TabsPage} from "../tabs/tabs";
   templateUrl: "login-page.html"
 })
 export class LoginPage {
-  private usernameOrEmail: String;
-  private password: String;
+  private usernameOrEmail: string;
+  private password: string;
   private loading: Loading;
 
   constructor( private navCtrl: NavController, private http: Http_provider, private data: Data_provider,
@@ -26,7 +26,7 @@ export class LoginPage {
       return this.data.getUser();
     }).then(user =>{
       this.loading.dismissAll();
-      this.navCtrl.setRoot(TabsPage, {user: user});
+      this.navCtrl.setRoot(TabsPage, {user: user, tab: 0});
     }).catch(err => {
       this.loading.dismissAll();
     })
@@ -37,7 +37,7 @@ export class LoginPage {
       return this.auth.login(this.usernameOrEmail, this.password);
     }).then(response => {
       this.loading.dismissAll();
-      this.navCtrl.setRoot(TabsPage, {user: response});
+      this.navCtrl.setRoot(TabsPage, {user: response, tab: 0});
     }).catch(err => {
       this.loading.dismissAll();
       this.presentToast("Login fehlgeschlagen! " + err.toString());

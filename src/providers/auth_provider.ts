@@ -51,5 +51,9 @@ export class Auth_provider {
       {headers: this.buildHeader()}).toPromise();
   }
 
+  public logout(): Promise<any>{
+    return this.dataProvider.clearAll();
+  }
+
 
 }
