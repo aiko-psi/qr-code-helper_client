@@ -10,11 +10,11 @@ export class Data_provider{
   }
 
   public getUser(): Promise<User>{
-    let user = this.storage.get("user").then(userJSON =>{
+    let user: Promise<User> = this.storage.get("user").then(userJSON =>{
       return User.fromJSON(userJSON);
     });
-    let token = this.storage.get("token");
-    return Promise.all([user,token]).then(response => {return response[0]});
+    let token: Promise<any> = this.storage.get("token");
+    return Promise.all([user, token]).then(response => {return response[0]});
   }
 
   public setUser(user: User){
