@@ -5,6 +5,7 @@ import {User} from "../../model/User";
 import {Loading, LoadingController, NavController, ToastController} from "ionic-angular";
 import {Data_provider} from "../../providers/data_provider";
 import {TabsPage} from "../tabs/tabs";
+import {LoginPage} from "../LoginPage/login-page";
 
 @Component({
   selector: "page-signup",
@@ -63,6 +64,10 @@ export class SignupPage {
       }
     })
 
+  }
+
+  login(){
+    this.navCtrl.push(LoginPage);
   }
 
   presentFailiureToast(err: String){

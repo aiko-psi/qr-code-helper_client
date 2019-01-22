@@ -1,5 +1,15 @@
-<ion-content>
+<ion-header>
+  <ion-navbar hideBackButton="true">
+    <ion-title>QR-Code-Helper</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="register()">
+        <ion-icon name="person-add"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
 
+<ion-content>
   <div class="login-box">
     <form (ngSubmit)="login()" #registerform="ngForm">
       <ion-row>
@@ -24,7 +34,6 @@
         </ion-col>
       </ion-row>
     </form>
-    <button ion-button full solid="false" (click)="register()">Registrieren</button>
   </div>
 
 </ion-content>
