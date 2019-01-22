@@ -1,37 +1,56 @@
 <ion-header>
   <ion-navbar>
+    <button ion-button icon-only menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>QR-Code Helper</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <h2>QR Verknüpfung erstellen</h2>
+  <h2 *ngIf="!update">QR-Verknüpfung erstellen</h2>
+  <h2 *ngIf="update">QR-Verknüpfung bearbeiten</h2>
 
   <div text-center="">
     <p><ion-img width="150" height="150" src="../assets/imgs/qr.png"></ion-img></p>
     <button ion-button>Scan</button>
   </div>
 
-  <ion-item>
-    <ion-label color="primary" stacked>Titel</ion-label>
-    <ion-input type="test" placeholder="Titel"></ion-input>
-  </ion-item>
+  <form (ngSubmit)="request()" #registerform="ngForm">
+    <ion-row>
+      <ion-col>
+        <ion-list inset>
+          <ion-item>
+            <ion-label color="primary" stacked>QR-Id</ion-label>
+            <ion-input name="id" type="test" placeholder="Wird automatisch gefüllt"
+                       [(ngModel)]="currentRedirect.qrcodeId" (change)="checkQRCodeId()">
+            </ion-input>
+          </ion-item>
 
-  <ion-item>
-    <ion-label color="primary" stacked>Ort</ion-label>
-    <ion-input type="text" placeholder="Ort"></ion-input>
-  </ion-item>
+          <ion-item>
+            <ion-label color="primary" stacked>Titel</ion-label>
+            <ion-input name="titel" type="test" placeholder="Titel" [(ngModel)]="currentRedirect.titel"></ion-input>
+          </ion-item>
 
-  <ion-item>
-    <ion-label color="primary" stacked>Link</ion-label>
-    <ion-input type="text" placeholder="www.moodle.de/....."></ion-input>
-  </ion-item>
+          <ion-item>
+            <ion-label color="primary" stacked>Ort</ion-label>
+            <ion-input name="location" type="text" placeholder="Ort" [(ngModel)]="currentRedirect.location"></ion-input>
+          </ion-item>
 
-  <ion-buttons end margin-top="70px">
-    <button ion-button text-end>Eintragen</button>
-  </ion-buttons>
-
-
+          <ion-item>
+            <ion-label color="primary" stacked>Link</ion-label>
+            <ion-input name="address" type="text" placeholder="www.moodle.de/....." [(ngModel)]="currentRedirect.address">
+            </ion-input>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <button ion-button full type="submit" [disabled]="!registerform.form.valid">Eintragen</button>
+      </ion-col>
+    </ion-row>
+  </form>
 
 
 </ion-content>

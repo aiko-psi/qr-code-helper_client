@@ -12,20 +12,31 @@ export class QRRedirect{
   private _qrCodeId: number;
   private _qrcode: QRCode;
 
-  constructor(titel:string, address:string, open:boolean, ownerId:number){
-    this.titel = titel;
-    this.address = address;
-    this.open = open;
-    this.ownerId = ownerId;
+  constructor(){
   }
 
   static fromJSON(data:any){
-    let newRedirect = new QRRedirect(data.titel, data.address, data.open, data.ownerId);
+    let newRedirect = new QRRedirect();
     newRedirect.id = data.id;
+    newRedirect.titel = data.titel;
+    newRedirect.address = data.address;
+    newRedirect.open = data.open;
+    newRedirect.ownerId = data.ownerId;
     if(data.location){newRedirect.location = data.location;}
     if(data.qrCodeId){newRedirect.qrcodeId = data.qrCodeId;}
     if(data.qrCode){QRCode.fromJSON(data.qrCode);}
     return newRedirect;
+  }
+
+  toJSON(){
+    let res = {};
+    res["titel"] = this.titel;
+    res["address"] = this.address;
+    res["open"] = this.open;
+    if(this.location){
+      res["location"] = this.location;
+    }
+    return res;
   }
 
 

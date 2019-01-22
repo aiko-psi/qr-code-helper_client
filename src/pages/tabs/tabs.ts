@@ -18,11 +18,13 @@ export class TabsPage {
   tab3Root = QRCodeHelperList;
   tab4Root = QRCodeHelperPrint;
 
-  private currentTab: number = 2;
+  private currentTab: number;
+  params;
 
 
   constructor(public navCtrl: NavController, public nav: NavParams) {
     this.currentTab = this.nav.data.tab;
+    this.params = this.nav.data;
   }
 
   ionViewWillEnter(){

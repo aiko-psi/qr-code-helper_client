@@ -1,6 +1,6 @@
 {
-  "name": "Ionic",
-  "short_name": "Ionic",
+  "name": "QR-Code-Helper",
+  "short_name": "QR-Code-Helper",
   "start_url": "index.html",
   "display": "standalone",
   "icons": [{

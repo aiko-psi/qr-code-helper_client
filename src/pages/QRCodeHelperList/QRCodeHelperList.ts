@@ -4,6 +4,7 @@ import {QRRedirect} from "../../model/QRRedirect";
 import {Http_provider} from "../../providers/http_provider";
 import {catchError} from "rxjs/operators";
 import {Pro} from "@ionic/pro";
+import {TabsPage} from "../tabs/tabs";
 
 @Component({
   selector: 'page-list',
@@ -40,6 +41,11 @@ export class QRCodeHelperList {
         this.qrRedirectArray = Array.from(resp);
         return this.qrRedirectArray;
       })
+  }
+
+  showRedirect(redirect: QRRedirect){
+    let id = redirect.id;
+    this.navCtrl.push(TabsPage, {redirectId: id, tab: 1});
   }
 
   doRefresh(refresher) {

@@ -7,7 +7,7 @@ import {List} from "ionic-angular";
 
 @Injectable()
 export class Http_provider{
-  public baseURL: string = "http://localhost:8080/api";
+  public baseURL: string = "http://192.168.0.242:8080/api";
 
   constructor(private http: HttpClient, private dataProvider: Data_provider){
 
@@ -53,6 +53,65 @@ export class Http_provider{
       objArray.push(obj[key]);
     }
     return objArray;
+  }
+
+  public getCurrentRedirectFromId(redirectId: number):Promise<any>{
+    return this.buildHeader()
+      .then(header => {
+        return this.http.get(this.baseURL + "/qrredirects/" + redirectId, {headers: header})
+          .toPromise();
+      }).then(resp => {
+          return QRRedirect.fromJSON(resp);
+      });
+  }
+
+  public isQRCodePossible(qrCodeId: number):Promise<any>{
+    return this.buildHeader()
+      .then(header => {
+        return this.http.get(this.baseURL + "/qrcodes/check/exist/" + qrCodeId, {headers: header})
+          .toPromise();
+      })
+  }
+
+  public isQRinUse(qrCodeId:number):Promise<any>{
+    return this.buildHeader()
+      .then(header => {
+        return this.http.get(this.baseURL + "/qrcodes/check/filled/" + qrCodeId, {headers: header})
+          .toPromise();
+      })
+  }
+
+  public getCurrentRedirectFromQRCodeId(qrCodeId: number):Promise<QRRedirect>{
+    return this.buildHeader()
+      .then(header => {
+        return this.http.get(this.baseURL + "/qrcodes/" + qrCodeId, {headers: header})
+          .toPromise();
+      }).then(resp => {
+        return QRRedirect.fromJSON(resp["redirect"])
+      });
+
+  }
+
+  // Post
+
+  public postQRRedirect(redirect: QRRedirect){
+    return this.buildHeader()
+      .then(header => {
+        return this.http.post(this.baseURL + "/qrredirects/" + redirect.qrcodeId, redirect.toJSON(),
+          {headers: header})
+          .toPromise();
+      })
+  }
+
+  // Put
+
+  public updateQRRedirect(redirect: QRRedirect){
+    return this.buildHeader()
+      .then(header => {
+        return this.http.put(this.baseURL + "/qrredirects/" + redirect.id, redirect.toJSON(),
+          {headers: header})
+          .toPromise();
+      })
   }
 
 
