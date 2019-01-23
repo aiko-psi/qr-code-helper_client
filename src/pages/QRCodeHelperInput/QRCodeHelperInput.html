@@ -12,8 +12,8 @@
   <h2 *ngIf="update">QR-Verknüpfung bearbeiten</h2>
 
   <div text-center="">
-    <p><ion-img *ngIf="!qrIdOkay" width="150" height="150" src="../assets/imgs/QR_Code_Helper_Falsch.png"></ion-img></p>
-    <p><ion-img *ngIf="qrIdOkay" width="150" height="150" src="../assets/imgs/QR_Code_Helper_Richtig.png"></ion-img></p>
+    <p *ngIf="!qrIdOkay"><img width="150" height="150" src="../assets/imgs/QR_Code_Helper_Falsch.png"/></p>
+    <p *ngIf="qrIdOkay"><img width="150" height="150" src="../assets/imgs/QR_Code_Helper_Richtig.png"/></p>
     <button ion-button (click)="scan()">
       Scan
     </button>

@@ -55,10 +55,14 @@ export class QRCodeHelperInput {
       })
       .then(resp => {
         this.qrIdOkay= true;
-        return this.currentRedirect;
-      }).then(()=>{
-        this.loading.dismissAll();
+        return this.currentRedirect = resp;
       })
+      .then(()=>{
+        this.qrIdOkay = true;
+        this.update = true;
+        return this.loading.dismissAll();
+      })
+
   }
 
 
