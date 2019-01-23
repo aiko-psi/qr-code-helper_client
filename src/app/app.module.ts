@@ -20,6 +20,8 @@ import {Data_provider} from "../providers/data_provider";
 import {Http_provider} from "../providers/http_provider";
 import {Auth_provider} from "../providers/auth_provider";
 import {SignupPage} from "../pages/SignupPage/signup-page";
+import {QRScanner} from "@ionic-native/qr-scanner";
+import {ScannerPage} from "../pages/QRScanner/scanner-page";
 
 @NgModule({
   declarations: [
@@ -31,7 +33,8 @@ import {SignupPage} from "../pages/SignupPage/signup-page";
     QRCodeHelperList,
     QRCodeHelperPrint,
     LoginPage,
-    SignupPage
+    SignupPage,
+    ScannerPage
   ],
   imports: [
     BrowserModule,
@@ -49,7 +52,8 @@ import {SignupPage} from "../pages/SignupPage/signup-page";
     QRCodeHelperList,
     QRCodeHelperPrint,
     LoginPage,
-    SignupPage
+    SignupPage,
+    ScannerPage
   ],
   providers: [
     StatusBar,
@@ -58,6 +62,7 @@ import {SignupPage} from "../pages/SignupPage/signup-page";
     Data_provider,
     Http_provider,
     Auth_provider,
+    QRScanner,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

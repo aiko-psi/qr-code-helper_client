@@ -7,7 +7,7 @@ import {List} from "ionic-angular";
 
 @Injectable()
 export class Http_provider{
-  public baseURL: string = "http://192.168.0.242:8080/api";
+  public baseURL: string = "https://p4000.tox.ninja/api";
 
   constructor(private http: HttpClient, private dataProvider: Data_provider){
 
@@ -16,6 +16,7 @@ export class Http_provider{
   public buildHeader(): Promise<HttpHeaders>{
     const header = new HttpHeaders();
     header.append("Content-Type", "application/json");
+    header.append("Access-Control-Allow-Origin", "*");
      return this.dataProvider.getToken().then(token => {
       return header.append("Authorization", "Bearer "+ token);
     });

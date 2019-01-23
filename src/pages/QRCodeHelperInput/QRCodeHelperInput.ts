@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import {Loading, LoadingController, NavController, NavParams, ToastController} from 'ionic-angular';
+import {Loading, LoadingController, NavController, NavParams, Platform, ToastController} from 'ionic-angular';
 import {QRRedirect} from "../../model/QRRedirect";
 import {Http_provider} from "../../providers/http_provider";
+import {ScannerPage} from "../QRScanner/scanner-page";
 
 @Component({
   selector: 'page-input',
@@ -11,14 +12,25 @@ export class QRCodeHelperInput {
   private loading: Loading;
   private currentRedirect: QRRedirect = new QRRedirect();
   private update: boolean;
-  private uptodate: boolean;
+  private qrIdOkay: boolean;
+  private searchUrl: string;
 
   constructor(public navCtrl: NavController, private toast: ToastController, private loadingCtrl: LoadingController,
-              private navParams: NavParams , private http: Http_provider) {
+              private navParams: NavParams , private http: Http_provider, private plt: Platform) {
+    this.searchUrl = this.http.baseURL.replace("/api", "") + "/qrcodehelper/qrredirect/";
+
 
   }
 
   ionViewWillEnter(){
+    if(this.navParams.data.scanning){
+      this.processScanningResult();
+    } else {
+      this.checkLoad();
+    }
+  }
+
+  checkLoad(){
     if(this.navParams.data.redirectId){
       this.loadFromRedirectId(this.navParams.data.redirectId).then(()=>{
         this.update = true;
@@ -87,11 +99,44 @@ export class QRCodeHelperInput {
 
   checkQRCodeId(){
     return this.http.isQRCodePossible(this.currentRedirect.qrcodeId)
+      .then(()=> {
+        this.qrIdOkay= true;
+      })
       .catch(err => {
+        this.qrIdOkay = false;
         this.presentToast("QR-Code-ID ist noch nicht registriert!")
       })
   }
 
+  scan(){
+    if (this.plt.is('cordova')){
+      this.navCtrl.push(ScannerPage);
+    } else {
+      this.presentToast("QR-Code-Scanner nicht verfügbar.");
+    }
+  }
+
+  processScanningResult(){
+    let scanResult = this.navParams.get("scanResult");
+    if(scanResult){
+      this.processString(scanResult);
+    } else {
+      this.presentToast("Kein QR-Code gescannt");
+    }
+  }
+
+
+  processString(text: string){
+    if(text.match(this.searchUrl)){
+      let numString = text.replace(this.searchUrl, "");
+      let idCode = parseInt(numString, 10);
+      this.currentRedirect.qrcodeId = idCode;
+      this.checkQRCodeId();
+    } else {
+      this.presentToast("QR-Code gehört nicht zu verknüpfbaren QR-Codes dieser Anwendung!");
+      this.qrIdOkay = false;
+    }
+  }
 
   presentToast(message: string){
     let toast = this.toast.create({

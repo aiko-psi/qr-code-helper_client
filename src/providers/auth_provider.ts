@@ -16,6 +16,7 @@ export class Auth_provider {
   public buildHeader(): HttpHeaders{
     let header= new HttpHeaders();
     header.append("Content-Type", "application/json");
+    header.append("Access-Control-Allow-Origin", "*");
     return header;
   }
 
