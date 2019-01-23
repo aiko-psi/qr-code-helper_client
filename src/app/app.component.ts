@@ -31,4 +31,8 @@ export class MyApp {
   showInfo(){
     this.nav.push(TabsPage, {tab: 0})
   }
+
+  showContact(){
+    this.nav.push(TabsPage, {tab: 0})
+  }
 }

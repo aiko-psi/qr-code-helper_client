@@ -25,6 +25,7 @@ export class QRCodeHelperInput {
   ionViewWillEnter(){
     if(this.navParams.data.scanning){
       this.processScanningResult();
+      this.navParams.data.scanning = false;
     } else {
       this.checkLoad();
     }
@@ -34,6 +35,7 @@ export class QRCodeHelperInput {
     if(this.navParams.data.redirectId){
       this.loadFromRedirectId(this.navParams.data.redirectId).then(()=>{
         this.update = true;
+        this.navParams.data.redirectId= null;
       }).catch(()=>{
         this.loading.dismissAll();
         this.presentToast("Laden fehlgeschlagen.");
@@ -77,7 +79,7 @@ export class QRCodeHelperInput {
       })
       .catch(err => {
         this.loading.dismissAll();
-        this.presentToast("Eintragunen fehlgeschlagen!" + err);
+        this.presentToast("Eintragunen fehlgeschlagen!" + err.toString());
       })
   }
 
@@ -92,7 +94,7 @@ export class QRCodeHelperInput {
       })
       .catch(err => {
         this.loading.dismissAll();
-        this.presentToast("Änderung fehlgeschlagen!" + err);
+        this.presentToast("Änderung fehlgeschlagen!" + err.toString());
       })
 
   }

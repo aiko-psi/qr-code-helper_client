@@ -30,7 +30,7 @@ export class QRCodeHelperList {
       .then(() => {this.loading.dismissAll();})
       .catch(err => {
         this.loading.dismissAll();
-        this.presentToast("Laden der Daten fehlgeschlagen. " + err);
+        this.presentToast("Laden der Daten fehlgeschlagen. " + err.toString());
       })
   }
 
