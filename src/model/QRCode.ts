@@ -15,7 +15,7 @@ export class QRCode{
     let newCode = new QRCode();
     newCode.id = data.id;
     if(data.redirectId){newCode.redirectId = data.redirectId;}
-    if(data.redirect){QRRedirect.fromJSON(data.redirect);}
+    if(data.redirect){newCode.redirect = QRRedirect.fromJSON(data.redirect);}
     return newCode;
   }
 

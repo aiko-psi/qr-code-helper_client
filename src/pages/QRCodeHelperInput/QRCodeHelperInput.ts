@@ -3,6 +3,7 @@ import {Loading, LoadingController, NavController, NavParams, Platform, ToastCon
 import {QRRedirect} from "../../model/QRRedirect";
 import {Http_provider} from "../../providers/http_provider";
 import {ScannerPage} from "../QRScanner/scanner-page";
+import {QRCode} from "../../model/QRCode";
 
 @Component({
   selector: 'page-input',
@@ -53,7 +54,8 @@ export class QRCodeHelperInput {
         return this.http.getCurrentRedirectFromId(redirectId)
       })
       .then(resp => {
-        return this.currentRedirect = resp;
+        this.qrIdOkay= true;
+        return this.currentRedirect;
       }).then(()=>{
         this.loading.dismissAll();
       })
@@ -102,11 +104,19 @@ export class QRCodeHelperInput {
   checkQRCodeId(){
     return this.http.isQRCodePossible(this.currentRedirect.qrcodeId)
       .then(()=> {
-        this.qrIdOkay= true;
+        return this.qrIdOkay= true;
       })
       .catch(err => {
         this.qrIdOkay = false;
-        this.presentToast("QR-Code-ID ist noch nicht registriert!")
+        return this.presentToast("QR-Code-ID ist noch nicht registriert!")
+      })
+      .then(()=>{
+        return this.http.isQRinUse(this.currentRedirect.qrcodeId)
+      }).then(() => {
+        return this.http.getQRCode(this.currentRedirect.qrcodeId)
+      }).then((resp) => {
+        let response: QRCode = resp;
+        return this.loadFromRedirectId(response.redirect.id);
       })
   }
 

@@ -4,6 +4,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {User} from "../model/User";
 import {QRRedirect} from "../model/QRRedirect";
 import {List} from "ionic-angular";
+import {QRCode} from "../model/QRCode";
 
 @Injectable()
 export class Http_provider{
@@ -44,6 +45,16 @@ export class Http_provider{
         return respArray.map(obj => {
           return QRRedirect.fromJSON(obj);
         });
+      })
+  }
+
+  public getQRCode(qrCodeId: number):Promise<any>{
+    return this.buildHeader()
+      .then(header => {
+        return this.http.get(this.baseURL + "/qrcodes/" + qrCodeId, {headers: header})
+          .toPromise();
+      }).then(resp => {
+        return QRCode.fromJSON(resp);
       })
   }
 
