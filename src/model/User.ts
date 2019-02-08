@@ -21,14 +21,24 @@ export class User{
     return newUser;
   }
 
-  toJSON(voucher: string, password: string){
+  toJSON(){
     let res = {};
     for (const key of Object.keys(this).filter((x) => x != "id" && x[0] === "_")){
       res[key.substr(1)]= this[key]
     }
-    res["voucher"]= voucher;
-    res["password"]= password;
-    return res;
+    return JSON.stringify(res);
+  }
+
+  packForSignup(voucher: string, password: string){
+    let res = {};
+    for (const key of Object.keys(this).filter((x) => x != "id" && x[0] === "_")){
+      res[key.substr(1)]= this[key]
+    }
+    if (voucher) {res["voucher"]= voucher;}
+    if (password) {res["password"]= password;}
+    let resp = (voucher && password) ? res : JSON.stringify(res);
+    return resp;
+
   }
 
   get id(): number {

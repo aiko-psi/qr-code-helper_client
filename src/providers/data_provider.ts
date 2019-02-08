@@ -10,23 +10,30 @@ export class Data_provider{
   }
 
   public getUser(): Promise<User>{
-    let user: Promise<User> = this.storage.get("user").then(userJSON =>{
-      return User.fromJSON(userJSON);
+    let user = this.storage.get('user')
+      .then(userJSON =>{
+        console.log(userJSON);
+        return User.fromJSON(JSON.parse(userJSON));
     });
-    let token: Promise<any> = this.storage.get("token");
-    return Promise.all([user, token]).then(response => {return response[0]});
+    let token = this.storage.get('token');
+    let both = [user, token];
+    return Promise.all(both)
+      .then((response) => {
+        console.log(typeof response[0]);
+        return response[0]
+      });
   }
 
-  public setUser(user: User){
-    this.storage.set("user", user);
+  public setUser(user: User): Promise<any>{
+    return this.storage.set('user', user.toJSON());
   }
 
-  public setToken(token: String){
-    this.storage.set("token", token);
+  public setToken(token: String): Promise<any>{
+    return this.storage.set('token', token);
   }
 
   public getToken(): Promise<String>{
-    return this.storage.get("token");
+    return this.storage.get('token');
   }
 
   public clearAll(): Promise<any>{

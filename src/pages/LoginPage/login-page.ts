@@ -24,12 +24,18 @@ export class LoginPage {
   ionViewWillEnter(){
     this.showLoading().then(() => {
       return this.data.getUser();
-    }).then(user =>{
-      this.loading.dismissAll();
-      this.navCtrl.setRoot(TabsPage, {user: user, tab: 0});
-    }).catch(err => {
-      this.loading.dismissAll();
     })
+      .then(user => {
+        return this.http.checkUser(user);
+      })
+      .then(user =>{
+        this.loading.dismissAll();
+        this.navCtrl.setRoot(TabsPage, {user: user, tab: 0});
+      })
+      .catch(err => {
+        //this.data.clearAll();
+        this.loading.dismissAll();
+      });
   }
 
   login(){

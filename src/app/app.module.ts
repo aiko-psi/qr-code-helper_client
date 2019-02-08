@@ -22,6 +22,7 @@ import {Auth_provider} from "../providers/auth_provider";
 import {SignupPage} from "../pages/SignupPage/signup-page";
 import {QRScanner} from "@ionic-native/qr-scanner";
 import {ScannerPage} from "../pages/QRScanner/scanner-page";
+import {QRCodeModule} from "angularx-qrcode";
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import {ScannerPage} from "../pages/QRScanner/scanner-page";
   imports: [
     BrowserModule,
     HttpClientModule,
+    QRCodeModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot()
   ],

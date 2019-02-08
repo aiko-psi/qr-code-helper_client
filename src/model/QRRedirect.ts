@@ -28,7 +28,7 @@ export class QRRedirect{
     return newRedirect;
   }
 
-  toJSON(){
+  packToRequestBody(){
     let res = {};
     res["titel"] = this.titel;
     res["address"] = this.address;

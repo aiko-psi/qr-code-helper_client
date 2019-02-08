@@ -10,13 +10,20 @@
 <ion-content padding>
   <h2>QR-Codes erstellen</h2>
 
-  <div text-center="">
-    <p><ion-img width="150" height="150" src="../assets/imgs/qr.png"></ion-img></p>
+  <div class="qrSpace" *ngIf="addressList.length > 0">
+    <qrcode class="qrCode" [qrdata]="firstElement" size="265" [level]="'M'"></qrcode>
   </div>
+
+  <div *ngIf="addressList.length > 1" text-center="">...und {{count-1}} andere QR-Codes erzeugt.</div>
+
+  <div class="invisible" *ngFor="let qrCode of addressList.slice(1)">
+    <qrcode [qrdata]="qrCode" [size]="265" [level]="'M'"></qrcode>
+  </div>
+
 
   <ion-item>
     <ion-label color="primary" stacked>Anzahl</ion-label>
-    <ion-input type="number" placeholder="1"></ion-input>
+    <ion-input [(ngModel)]="count" type="number" placeholder="1"></ion-input>
   </ion-item>
 
   <ion-item>
@@ -30,7 +37,7 @@
   </ion-item>
 
   <ion-buttons end margin-top="70px">
-    <button ion-button text-end (click)="this.presentToast()">{{this.mailing ? "Senden" : "Speichern"}}</button>
+    <button ion-button text-end (click)="this.createQRCode()">{{this.mailing ? "Senden" : "Speichern"}}</button>
   </ion-buttons>
 
 

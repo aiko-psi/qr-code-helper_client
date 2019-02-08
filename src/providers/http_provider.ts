@@ -3,12 +3,11 @@ import {Data_provider} from "./data_provider";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {User} from "../model/User";
 import {QRRedirect} from "../model/QRRedirect";
-import {List} from "ionic-angular";
 import {QRCode} from "../model/QRCode";
 
 @Injectable()
 export class Http_provider{
-  public baseURL: string = "https://p4000.tox.ninja/api";
+  public baseURL: string = "http://localhost:8080/api";
 
   constructor(private http: HttpClient, private dataProvider: Data_provider){
 
@@ -109,7 +108,16 @@ export class Http_provider{
   public postQRRedirect(redirect: QRRedirect){
     return this.buildHeader()
       .then(header => {
-        return this.http.post(this.baseURL + "/qrredirects/" + redirect.qrcodeId, redirect.toJSON(),
+        return this.http.post(this.baseURL + "/qrredirects/" + redirect.qrcodeId, redirect.packToRequestBody(),
+          {headers: header})
+          .toPromise();
+      })
+  }
+
+  public postQRCodes(count: number){
+    return this.buildHeader()
+      .then(header => {
+        return this.http.post(this.baseURL + "/qrcodes/create?count=" + count.toString(), {},
           {headers: header})
           .toPromise();
       })
@@ -120,9 +128,20 @@ export class Http_provider{
   public updateQRRedirect(redirect: QRRedirect){
     return this.buildHeader()
       .then(header => {
-        return this.http.put(this.baseURL + "/qrredirects/" + redirect.id, redirect.toJSON(),
+        return this.http.put(this.baseURL + "/qrredirects/" + redirect.id, redirect.packToRequestBody(),
           {headers: header})
           .toPromise();
+      })
+  }
+
+  // Check
+
+  public checkUser(user: User): Promise<any>{
+    return this.buildHeader()
+      .then(header => {
+        return this.http.get(this.baseURL + "/user/username/" + user.username.toString() + "/" + user.email.toString(),
+          {headers: header})
+          .toPromise()
       })
   }
 
