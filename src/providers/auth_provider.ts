@@ -35,7 +35,7 @@ export class Auth_provider {
   }
 
   public signup(userRequest: User, password: string, voucher: string){
-    const body = userRequest.toJSON(voucher, password);
+    const body = userRequest.packForSignup(voucher, password);
     return this.http.post(this.url + "/signup", body, {headers: this.buildHeader()}).toPromise()
       .then(response => {
       return this.dataProvider.setUser(User.fromJSON(response));

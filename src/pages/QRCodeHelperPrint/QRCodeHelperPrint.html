@@ -10,35 +10,54 @@
 <ion-content padding>
   <h2>QR-Codes erstellen</h2>
 
-  <div class="qrSpace" *ngIf="addressList.length > 0">
-    <qrcode class="qrCode" [qrdata]="firstElement" size="265" [level]="'M'"></qrcode>
+  <div *ngIf="addressList.length == 0" div text-center="">
+    <p *ngIf="!qrIdOkay"><img width="150" height="150" src="../assets/imgs/QR_Code_Helper_Falsch.png"/></p>
+
+    <h4>Noch kein QR-Code erstellt!</h4>
+    <h5>Klicken Sie auf das Plus-Zeichen um einen neuen QR-Code zu erstellen.</h5>
+
   </div>
 
-  <div *ngIf="addressList.length > 1" text-center="">...und {{count-1}} andere QR-Codes erzeugt.</div>
+
+  <div class="qrSpace" *ngIf="addressList.length > 0">
+    <qrcode class="qrCode" [qrdata]="firstElement" size="265" [level]="'M'"></qrcode>
+
+
+  <h6 *ngIf="addressList.length > 1" text-center="">...und {{count-1}} andere QR-Codes erzeugt.</h6>
 
   <div class="invisible" *ngFor="let qrCode of addressList.slice(1)">
     <qrcode [qrdata]="qrCode" [size]="265" [level]="'M'"></qrcode>
   </div>
 
+    <ion-list no-border margin="20px">
 
-  <ion-item>
-    <ion-label color="primary" stacked>Anzahl</ion-label>
-    <ion-input [(ngModel)]="count" type="number" placeholder="1"></ion-input>
-  </ion-item>
+      <ion-item>
+        <ion-icon name='albums' item-start></ion-icon>
+        <h2>Anzahl</h2>
+        <ion-badge item-end>{{count}}</ion-badge>
+      </ion-item>
 
-  <ion-item>
-    <ion-label>Per Mail senden</ion-label>
-    <ion-toggle [(ngModel)]="mailing"></ion-toggle>
-  </ion-item>
+      <ion-item>
+        <ion-icon name='key' item-start ></ion-icon>
+        <h2>IDs</h2> <br>
+        <p text-wrap>{{idlist}}</p>
+      </ion-item>
 
-  <ion-item *ngIf="this.mailing">
-    <ion-label color="primary" stacked>Mailadresse</ion-label>
-    <ion-input type="text" placeholder="@"></ion-input>
-  </ion-item>
+    </ion-list>
+  </div>
 
-  <ion-buttons end margin-top="70px">
-    <button ion-button text-end (click)="this.createQRCode()">{{this.mailing ? "Senden" : "Speichern"}}</button>
-  </ion-buttons>
+  <ion-fab right bottom>
+    <button ion-fab (click)="this.showAddPrompt()">
+      <ion-icon name="add" ></ion-icon>
+    </button>
+  </ion-fab>
+
+  <ion-fab left bottom>
+    <button ion-fab (click)="this.showRepeatPrompt()">
+      <ion-icon name="repeat"></ion-icon>
+    </button>
+  </ion-fab>
+
 
 
 
