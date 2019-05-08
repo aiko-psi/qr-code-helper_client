@@ -22,15 +22,28 @@ export class TabsPage {
   params;
 
 
+  /**
+   * Constructor
+   * @param navCtrl
+   * @param nav
+   */
   constructor(public navCtrl: NavController, public nav: NavParams) {
     this.currentTab = this.nav.data.tab;
     this.params = this.nav.data;
   }
 
+  /**
+   * When entering View: Sets current tab to tab from the nav data
+   * @see [[nav]]
+   */
   ionViewWillEnter(){
     this.currentTab = this.nav.data.tab;
   }
 
+  /**
+   * When View loaded: Sets current tab to tab from the nav data
+   * @see [[nav]]
+   */
   ionViewDidLoad(){
     this.currentTab = this.nav.data.tab;
   }

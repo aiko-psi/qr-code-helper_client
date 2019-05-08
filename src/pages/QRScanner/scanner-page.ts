@@ -3,6 +3,9 @@ import {Loading, LoadingController, NavController, NavParams, ToastController} f
 import {QRScanner, QRScannerStatus} from "@ionic-native/qr-scanner";
 import {Component} from "@angular/core";
 
+/**
+ * View to scan QRCodes with the camera, possible only with cordova
+ */
 @Component({
   selector: 'page-scanner',
   templateUrl: 'scanner-page.html'
@@ -11,22 +14,40 @@ export class ScannerPage {
   private loading: Loading;
   private scanSub;
 
+  /**
+   *
+   * @param navCtrl
+   * @param toast
+   * @param loadingCtrl
+   * @param navParams
+   * @param http
+   * @param qrScanner
+   */
   constructor(public navCtrl: NavController, private toast: ToastController, private loadingCtrl: LoadingController,
               private navParams: NavParams , private http: Http_provider, private qrScanner: QRScanner) {
 
-
   }
 
+  /**
+   * Lifecycle event: Starts reading QRCodes when entering the page
+   * @see [[readQRCode]]
+   */
   ionViewDidLoad(){
     this.readQRCode();
   }
 
+  /**
+   * Lifecycle event: Hides cameraview and unsubscribes when leaving the view
+   */
   ionViewWillLeave(){
     this.qrScanner.hide(); // hide camera preview
     this.scanSub.unsubscribe(); // stop scanning
   }
 
 
+  /**
+   * Reads the QRCOde, see documentation of the Ionic Native QR Scanner
+   */
   readQRCode() {
     this.qrScanner.prepare()
       .then((status: QRScannerStatus) => {
@@ -65,6 +86,9 @@ export class ScannerPage {
       });
   }
 
+  /**
+   * Ends Scanning and pops view, sets result value to null
+   */
   popEmpty(){
     this.qrScanner.hide(); // hide camera preview
     this.scanSub.unsubscribe(); // stop scanning
@@ -74,6 +98,10 @@ export class ScannerPage {
 
   }
 
+  /**
+   * Ends scanning, sets result value of the prevoius view to the current result, then pops current view
+   * @param result URL of the QRCode
+   */
   popResult(result: string){
     this.navCtrl.getPrevious().data.scanResult = result;
     this.navCtrl.getPrevious().data.scanning = true;
@@ -81,6 +109,10 @@ export class ScannerPage {
   }
 
 
+  /**
+   * Present message to user
+   * @param message
+   */
   presentToast(message: string){
     let toast = this.toast.create({
       message: message,
@@ -90,6 +122,9 @@ export class ScannerPage {
     toast.present();
   }
 
+  /**
+   * Show loading screen
+   */
   showLoading(){
     this.loading = this.loadingCtrl.create({
       content: "Bitte warten..."
