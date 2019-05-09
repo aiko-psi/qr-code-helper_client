@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {AlertController, NavController, Platform} from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
 import {Http_provider} from "../../providers/http_provider";
+import { Base64ToGallery } from '@ionic-native/base64-to-gallery';
 
 /**
  * View which allows the user to create new QRCodes
@@ -24,12 +25,16 @@ export class QRCodeHelperPrint {
    * @param http
    * @param platform
    * @param alertCtrl
+   * @param base64ToGallery
    */
   constructor(public navCtrl: NavController, private toastCtrl: ToastController, private http: Http_provider,
-              private platform: Platform, public alertCtrl: AlertController) {
+              private platform: Platform, public alertCtrl: AlertController, private base64ToGallery: Base64ToGallery){
     this.count = 1;
     this.mailing = false;
     this.addressList = new Array<string>();
+  }
+
+  ionViewWillEnter() {
   }
 
   /**
@@ -91,6 +96,25 @@ export class QRCodeHelperPrint {
   }
 
   /**
+   *
+   */
+  saveFilesToGallery() {
+    let canvasList = document.querySelectorAll('canvas');
+    if (canvasList.length >= 1){
+      for (var i = 0; i < canvasList.length; i++){
+        let canvas = canvasList[i];
+        let base64Data = canvas.toDataURL();
+        this.base64ToGallery.base64ToGallery(base64Data).then(
+          res => console.log('Saved image to gallery ', res),
+          err => console.log('Error saving image to gallery ', err)
+        );
+      }
+    } else {
+      this.presentToast("Speichern nicht möglich, kein QR-Code gefunden!")
+    }
+  }
+
+  /**
    * Shows Prompt to user to manage creation of new QRCodes, asks for count of QRCodes to be created
    * @see [[count]]
    * @see [[createQRCode]]
@@ -102,7 +126,7 @@ export class QRCodeHelperPrint {
       inputs: [
         {
           name: 'count',
-          placeholder: '1'
+          placeholder: ' '
         },
       ],
       buttons: [
