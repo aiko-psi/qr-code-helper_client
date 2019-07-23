@@ -35,6 +35,7 @@ export class QRCodeHelperPrint {
   }
 
   ionViewWillEnter() {
+
   }
 
   /**
@@ -96,7 +97,9 @@ export class QRCodeHelperPrint {
   }
 
   /**
-   *
+   * Saves the QR-Codes as pictures in the Gallery
+   * Uses ionic-native base64ToGallery module
+   * Uses invisible canvas -> base64 -> Gallery
    */
   saveFilesToGallery() {
     let canvasList = document.querySelectorAll('canvas');
