@@ -3,6 +3,7 @@ import {AlertController, NavController, Platform} from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
 import {Http_provider} from "../../providers/http_provider";
 import { Base64ToGallery } from '@ionic-native/base64-to-gallery';
+import {AndroidPermissions} from "@ionic-native/android-permissions";
 
 /**
  * View which allows the user to create new QRCodes
@@ -26,9 +27,11 @@ export class QRCodeHelperPrint {
    * @param platform
    * @param alertCtrl
    * @param base64ToGallery
+   * @param androidPermissions
    */
   constructor(public navCtrl: NavController, private toastCtrl: ToastController, private http: Http_provider,
-              private platform: Platform, public alertCtrl: AlertController, private base64ToGallery: Base64ToGallery){
+              private platform: Platform, public alertCtrl: AlertController, private base64ToGallery: Base64ToGallery,
+              private androidPermissions: AndroidPermissions){
     this.count = 1;
     this.mailing = false;
     this.addressList = new Array<string>();
@@ -98,6 +101,7 @@ export class QRCodeHelperPrint {
 
   /**
    * Saves the QR-Codes as pictures in the Gallery
+   * Checks if the Permission is granted for Android Device
    * Uses ionic-native base64ToGallery module
    * Uses invisible canvas -> base64 -> Gallery
    */
@@ -108,12 +112,48 @@ export class QRCodeHelperPrint {
         let canvas = canvasList[i];
         let base64Data = canvas.toDataURL();
         this.base64ToGallery.base64ToGallery(base64Data).then(
-          res => console.log('Saved image to gallery ', res),
-          err => console.log('Error saving image to gallery ', err)
+          res => {
+            console.log('Saved image to gallery ', res);
+            this.presentToast("Bild in der Gallerie abgespeichert.")
+          },
+          err => {
+            console.log('Error saving image to gallery ', err);
+            this.presentToast("Speichern nicht möglich.")
+          }
         );
       }
     } else {
       this.presentToast("Speichern nicht möglich, kein QR-Code gefunden!")
+    }
+  }
+
+  /**
+   * Checks on which platform the app is running,
+   * then checks if the permissions for saving an image in the gallery are granted
+   * @see {{saveFilesToGallery}}
+   */
+  checkGalleryPermissions(){
+    if (this.platform.is("android")){
+      this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE).then(
+        result => {
+          console.log(result);
+          if (result.hasPermission == true) this.saveFilesToGallery();
+          else {
+            this.presentToast("Bitte Berechtigung erteilen und erneut versuchen!");
+            this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE)
+          }
+        },
+        err => {
+          console.log(err);
+          this.presentToast("Speichern fehlgeschlagen, Fehler in Berechtigungen.");
+        }
+      );
+    } else if (this.platform.is("ios")){
+      // Hoping the permissions are already granted, check this when ios device is available for testing
+      this.saveFilesToGallery()
+    } else {
+      this.presentToast("Speichern des Bildes ist momentan nur unter Android oder iOS möglich.")
+      // TODO saving image out of the browser (js tools?)
     }
   }
 
@@ -189,7 +229,7 @@ export class QRCodeHelperPrint {
   presentToast(text: string) {
     let toast = this.toastCtrl.create({
       message: text,
-      duration: 3000,
+      duration: 5000,
       position: 'top'
     });
     toast.present();

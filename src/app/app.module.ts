@@ -24,6 +24,7 @@ import {QRScanner} from "@ionic-native/qr-scanner";
 import {ScannerPage} from "../pages/QRScanner/scanner-page";
 import {QRCodeModule} from "angularx-qrcode";
 import {Base64ToGallery} from "@ionic-native/base64-to-gallery";
+import {AndroidPermissions} from "@ionic-native/android-permissions";
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import {Base64ToGallery} from "@ionic-native/base64-to-gallery";
     Auth_provider,
     QRScanner,
     Base64ToGallery,
+    AndroidPermissions,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
