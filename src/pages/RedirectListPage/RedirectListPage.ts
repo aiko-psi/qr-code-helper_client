@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import {Loading, LoadingController, NavController, ToastController} from 'ionic-angular';
+import {AlertController, Loading, LoadingController, NavController, ToastController} from 'ionic-angular';
 import {QRRedirect} from "../../model/QRRedirect";
 import {Http_provider} from "../../providers/http_provider";
 import {TabsPage} from "../tabs/tabs";
+import {RedirectEditPage} from "../RedirectEditPage/RedirectEditPage";
 
 /**
  * View which shows a list of cards with QRRedirects (with or without filter)
@@ -13,7 +14,7 @@ import {TabsPage} from "../tabs/tabs";
 })
 export class RedirectListPage {
   private qrRedirectArray: Array<QRRedirect> = new Array<QRRedirect>();
-  private user: boolean;
+  private userFilter: boolean;
   private loading: Loading;
 
   /**
@@ -24,7 +25,7 @@ export class RedirectListPage {
    * @param loadingCtrl
    */
   constructor(public navCtrl: NavController, public http: Http_provider, private toast: ToastController,
-              private loadingCtrl: LoadingController) {
+              private loadingCtrl: LoadingController, private alertCtrl: AlertController) {
   }
 
   /**
@@ -55,7 +56,7 @@ export class RedirectListPage {
    * @return Promise resolving if requests succeeded
    */
   load():Promise<any>{
-    let whichRedirect = this.user ? "user": "all";
+    let whichRedirect = this.userFilter ? "user": "all";
     return this.http.getRedirects(whichRedirect)
       .then(resp => {
         this.qrRedirectArray = Array.from(resp);
@@ -64,12 +65,12 @@ export class RedirectListPage {
   }
 
   /**
-   * Navigates to [[QRCodeHelperInput]] to show details of QRRedirect and edit it
+   * Navigates to [[RedirectEditPage]] to show details of QRRedirect and edit it
    * @param redirect selected QRRedirect
    */
   showRedirect(redirect: QRRedirect){
     let id = redirect.id;
-    this.navCtrl.push(TabsPage, {redirectId: id, tab: 1});
+    this.navCtrl.push(RedirectEditPage, {redirectId: id});
   }
 
   /**
@@ -78,6 +79,45 @@ export class RedirectListPage {
    */
   doRefresh(refresher) {
     this.update().then(() => {refresher.complete();});
+  }
+
+  /**
+   * Navigate to [[RedirectEditPage]] to edit the new Redirect
+   */
+  newRedirect(){
+    this.navCtrl.push(RedirectEditPage);
+  }
+
+  /**
+   * Alert to edit View Options for filtering and sorting the listentries / redirects
+   */
+  editViewOptions() {
+    let alert = this.alertCtrl.create();
+    alert.setTitle('Which planets have you visited?');
+
+    alert.addInput({
+      type: 'checkbox',
+      label: 'Nur eigene Verknüpfungen',
+      value: 'userFilter'
+    });
+
+    alert.addInput({
+      type: 'checkbox',
+      label: 'Nach meisten Klicks sortieren (Dummy)',
+      value: 'sortStats'
+    });
+
+    alert.addButton('Abbrechen');
+    alert.addButton({
+      text: 'Okay',
+      handler: data => {
+        console.log('Checkbox data:', data);
+        this.userFilter = data.userFilter;
+        //do something with sort stats
+        //do something else :-P
+      }
+    });
+    alert.present();
   }
 
   /**

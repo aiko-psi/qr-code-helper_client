@@ -14,7 +14,6 @@ import {createViewChildren} from "@angular/compiler/src/core";
 export class TabsPage {
 
   tab1Root = HomePage;
-  tab2Root = RedirectEditPage;
   tab3Root = RedirectListPage;
   tab4Root = CodeCreationPage;
 
