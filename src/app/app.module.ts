@@ -9,9 +9,9 @@ import { TabsPage } from '../pages/tabs/tabs';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import {QRCodeHelperInput} from "../pages/QRCodeHelperInput/QRCodeHelperInput";
-import {QRCodeHelperList} from "../pages/QRCodeHelperList/QRCodeHelperList";
-import {QRCodeHelperPrint} from "../pages/QRCodeHelperPrint/QRCodeHelperPrint";
+import {RedirectEditPage} from "../pages/RedirectEditPage/RedirectEditPage";
+import {RedirectListPage} from "../pages/RedirectListPage/RedirectListPage";
+import {CodeCreationPage} from "../pages/CodeCreationPage/CodeCreationPage";
 
 import { IonicStorageModule } from '@ionic/storage';
 import {HttpClientModule} from "@angular/common/http";
@@ -32,9 +32,9 @@ import {AndroidPermissions} from "@ionic-native/android-permissions";
     ContactPage,
     HomePage,
     TabsPage,
-    QRCodeHelperInput,
-    QRCodeHelperList,
-    QRCodeHelperPrint,
+    RedirectEditPage,
+    RedirectListPage,
+    CodeCreationPage,
     LoginPage,
     SignupPage,
     ScannerPage
@@ -52,9 +52,9 @@ import {AndroidPermissions} from "@ionic-native/android-permissions";
     ContactPage,
     HomePage,
     TabsPage,
-    QRCodeHelperInput,
-    QRCodeHelperList,
-    QRCodeHelperPrint,
+    RedirectEditPage,
+    RedirectListPage,
+    CodeCreationPage,
     LoginPage,
     SignupPage,
     ScannerPage

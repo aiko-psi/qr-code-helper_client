@@ -10,9 +10,9 @@ import {QRCode} from "../../model/QRCode";
  */
 @Component({
   selector: 'page-input',
-  templateUrl: 'QRCodeHelperInput.html'
+  templateUrl: 'RedirectEditPage.html'
 })
-export class QRCodeHelperInput {
+export class RedirectEditPage {
   private loading: Loading;
   private currentRedirect: QRRedirect = new QRRedirect();
   readonly searchUrl: string;

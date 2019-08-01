@@ -9,9 +9,9 @@ import {TabsPage} from "../tabs/tabs";
  */
 @Component({
   selector: 'page-list',
-  templateUrl: 'QRCodeHelperList.html'
+  templateUrl: 'RedirectListPage.html'
 })
-export class QRCodeHelperList {
+export class RedirectListPage {
   private qrRedirectArray: Array<QRRedirect> = new Array<QRRedirect>();
   private user: boolean;
   private loading: Loading;

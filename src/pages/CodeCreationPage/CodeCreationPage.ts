@@ -10,9 +10,9 @@ import {AndroidPermissions} from "@ionic-native/android-permissions";
  */
 @Component({
   selector: 'page-print',
-  templateUrl: 'QRCodeHelperPrint.html'
+  templateUrl: 'CodeCreationPage.html'
 })
-export class QRCodeHelperPrint {
+export class CodeCreationPage {
   mailing: boolean;
   count: number;
   idlist: Array<number>;

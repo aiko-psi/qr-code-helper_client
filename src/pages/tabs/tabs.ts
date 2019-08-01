@@ -2,9 +2,9 @@ import {Component, ViewChild, ViewChildren} from '@angular/core';
 
 import { ContactPage } from '../contact/contact';
 import { HomePage } from '../home/home';
-import {QRCodeHelperInput} from "../QRCodeHelperInput/QRCodeHelperInput";
-import {QRCodeHelperList} from "../QRCodeHelperList/QRCodeHelperList";
-import {QRCodeHelperPrint} from "../QRCodeHelperPrint/QRCodeHelperPrint";
+import {RedirectEditPage} from "../RedirectEditPage/RedirectEditPage";
+import {RedirectListPage} from "../RedirectListPage/RedirectListPage";
+import {CodeCreationPage} from "../CodeCreationPage/CodeCreationPage";
 import {NavController, NavParams, Tabs} from "ionic-angular";
 import {createViewChildren} from "@angular/compiler/src/core";
 
@@ -14,9 +14,9 @@ import {createViewChildren} from "@angular/compiler/src/core";
 export class TabsPage {
 
   tab1Root = HomePage;
-  tab2Root = QRCodeHelperInput;
-  tab3Root = QRCodeHelperList;
-  tab4Root = QRCodeHelperPrint;
+  tab2Root = RedirectEditPage;
+  tab3Root = RedirectListPage;
+  tab4Root = CodeCreationPage;
 
   private currentTab: number;
   params;
