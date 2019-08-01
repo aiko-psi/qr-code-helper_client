@@ -29,7 +29,7 @@
   <div *ngIf="this.qrRedirectArray.length >= 1">
     <ion-card *ngFor="let redirect of this.qrRedirectArray"
               (click)="showRedirect(redirect)">
-      <ion-card-header><b>Titel: {{redirect.titel}}</b></ion-card-header>
+      <ion-card-header><b>Titel: {{redirect.title}}</b></ion-card-header>
       <ion-card-content>
         <p *ngIf="redirect.location">Ort: {{redirect.location}}</p>
         <p>Link: {{redirect.address}}</p>

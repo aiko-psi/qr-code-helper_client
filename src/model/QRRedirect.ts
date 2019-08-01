@@ -4,7 +4,7 @@ import {QRCode} from "./QRCode";
 @Injectable()
 export class QRRedirect{
   private _id: number;
-  private _titel: string;
+  private _title: string;
   private _location: string;
   private _address: string;
   private _ownerId: number;
@@ -18,7 +18,7 @@ export class QRRedirect{
   static fromJSON(data:any){
     let newRedirect = new QRRedirect();
     newRedirect.id = data.id;
-    newRedirect.titel = data.titel;
+    newRedirect.title = data.title;
     newRedirect.address = data.address;
     newRedirect.open = data.open;
     newRedirect.ownerId = data.ownerId;
@@ -30,7 +30,7 @@ export class QRRedirect{
 
   packToRequestBody(){
     let res = {};
-    res["titel"] = this.titel;
+    res["title"] = this.title;
     res["address"] = this.address;
     res["open"] = this.open;
     if(this.location){
@@ -48,12 +48,12 @@ export class QRRedirect{
     this._id = value;
   }
 
-  get titel(): string {
-    return this._titel;
+  get title(): string {
+    return this._title;
   }
 
-  set titel(value: string) {
-    this._titel = value;
+  set title(value: string) {
+    this._title = value;
   }
 
   get location(): string {
